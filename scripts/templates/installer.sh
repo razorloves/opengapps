@@ -2117,6 +2117,11 @@ if ( ! contains "$gapps_list" "googlenow" ) && ( ! contains "$gapps_list" "pixel
   install_note="${install_note}nolauncher_msg"$'\n' # make note that Launcher can't be removed unless user Overrides
 fi
 
+# If we're installing the pixel launcher overlay apk we must ADD launcher to $aosp_remove_list (if it's not already there)
+if ( contains "$gapps_list" "pixellauncher" ) && [ "$API" -ge "28" ] && ( ! contains "$aosp_remove_list" "launcher" ); then
+  aosp_remove_list="${aosp_remove_list}launcher"$'\n'
+fi
+
 # If we're installing calendargoogle we must ADD calendarstock to $aosp_remove_list (if it's not already there)
 if ( contains "$gapps_list" "calendargoogle" ) && ( ! contains "$aosp_remove_list" "calendarstock" ); then
   aosp_remove_list="${aosp_remove_list}calendarstock"$'\n'
